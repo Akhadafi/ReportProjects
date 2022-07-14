@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+<!--  -->
+{% block title %}sale title{% endblock title %}
+<!--  -->
+{% block content %} sale list
+<!--  -->
+{% for obj in object_list %}{{ obj.transaction_id }}{% endfor %}
+<!--  -->
+{% endblock content %}
