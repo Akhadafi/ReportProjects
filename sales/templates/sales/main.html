@@ -4,6 +4,8 @@
 <!--  -->
 {% block content %} sale list
 <!--  -->
-{% for obj in object_list %}{{ obj.transaction_id }}{% endfor %}
+{% for obj in object_list %}
+<a href="{{obj.get_absolute_url}}"> {{ obj.transaction_id }} </a>
+{% endfor %}
 <!--  -->
 {% endblock content %}
