@@ -1,3 +1,4 @@
+import pandas as pd
 from django.shortcuts import render
 from django.views.generic import DetailView, ListView
 
@@ -14,6 +15,14 @@ def home_view(request):
         date_to = request.POST.get("date_to")
         chart_type = request.POST.get("chart_type")
         print(date_from, date_to, chart_type)
+
+        qs = Sale.objects.filter(created__date=date_from)
+        obj = Sale.objects.get(id=1)
+        print("=====================")
+        df1 = pd.DataFrame(qs.values())
+        print(df1)
+        print("=====================")
+
     context = {
         "title": "Sales",
         "form": form,
