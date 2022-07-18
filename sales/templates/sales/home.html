@@ -13,12 +13,17 @@
   <button type="submit" class="btn btn-primary mt-3">Search</button>
 </form>
 <br />
-{% if sales_df %}
+{% if sales_df %} sales df
 <small> {{ sales_df|safe }} </small>
 <br />
+positions df
 <small> {{ positions_df|safe }} </small>
 <br />
+merged df
 <small> {{ merged_df|safe }} </small>
+<br />
+grouped by df
+<small> {{ df|safe }} </small>
 {% else %}
 <p>No data</p>
 {% endif %}
