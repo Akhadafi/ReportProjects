@@ -11,6 +11,7 @@ from .utils import get_customer_from_id, get_salesman_from_id
 def home_view(request):
     sales_df = None
     positions_df = None
+    merged_df = None
     form = SalesSearchForm(request.POST or None)
 
     if request.method == "POST":
@@ -32,7 +33,7 @@ def home_view(request):
                 lambda x: x.strftime("%Y-%m-%d")
             )
             sales_df.rename(
-                {"customer_id": "customer", "saleman_id": "salesman"},
+                {"customer_id": "customer", "saleman_id": "salesman", "id": "sales_id"},
                 axis=1,
                 inplace=True,
             )
@@ -48,9 +49,11 @@ def home_view(request):
                     }
                     positions_data.append(obj)
             positions_df = pd.DataFrame(positions_data)
+            merged_df = pd.merge(sales_df, positions_df, on="sales_id")
 
             sales_df = sales_df.to_html()
             positions_df = positions_df.to_html()
+            merged_df = merged_df.to_html()
         else:
             print("no data")
 
@@ -59,6 +62,7 @@ def home_view(request):
         "form": form,
         "sales_df": sales_df,
         "positions_df": positions_df,
+        "merged_df": merged_df,
     }
     return render(request, "sales/home.html", context)
 
