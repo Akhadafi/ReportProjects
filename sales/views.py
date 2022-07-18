@@ -4,6 +4,7 @@ from django.views.generic import DetailView, ListView
 
 from .forms import SalesSearchForm
 from .models import Sale
+from .utils import get_customer_from_id, get_salesman_from_id
 
 
 # Create your views here.
@@ -16,13 +17,25 @@ def home_view(request):
         date_from = request.POST.get("date_from")
         date_to = request.POST.get("date_to")
         chart_type = request.POST.get("chart_type")
-        print(date_from, date_to, chart_type)
+        # print(date_from, date_to, chart_type)
 
         sale_qs = Sale.objects.filter(
             created__date__lte=date_to, created__date__gte=date_from
         )
         if len(sale_qs) > 0:
             sales_df = pd.DataFrame(sale_qs.values())
+            sales_df["customer_id"] = sales_df["customer_id"].apply(
+                get_customer_from_id
+            )
+            sales_df["salesman_id"] = sales_df["saleman_id"].apply(get_salesman_from_id)
+            sales_df["created"] = sales_df["created"].apply(
+                lambda x: x.strftime("%Y-%m-%d")
+            )
+            sales_df.rename(
+                {"customer_id": "customer", "saleman_id": "salesman"},
+                axis=1,
+                inplace=True,
+            )
             positions_data = []
             for sale in sale_qs:
                 for pos in sale.get_positions():
@@ -38,15 +51,6 @@ def home_view(request):
 
             sales_df = sales_df.to_html()
             positions_df = positions_df.to_html()
-            print("=====================")
-            print("positions_df")
-            print(positions_df)
-            print("=====================")
-            print("=====================")
-            print("sales_df")
-            print(sales_df)
-            print("=====================")
-
         else:
             print("no data")
 
