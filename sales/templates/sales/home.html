@@ -47,6 +47,10 @@
   </div>
 </div>
 
+{% if no_data %}
+<div class="alert alert-warning" role="alert">{{ no_data }}</div>
+{% endif %}
+
 <form action="" method="POST">
   {% csrf_token %}
   <!--  -->
@@ -69,8 +73,6 @@ grouped by df
 Chart
 <br />
 <img src="data:image/png;base64, {{chart|safe}}" id="img" />
-{% else %}
-<p>No data</p>
 {% endif %}
 <button
   class="btn btn-primary not-visible"
