@@ -8,13 +8,9 @@
 <!--  -->
 {% block content %}
 <!--  -->
+{% block scripts %}
 <script src="{% static 'sales/home.js' %}" defer></script>
-<style>
-  .not-visible {
-    display: none;
-  }
-</style>
-
+{% endblock scripts %}
 <!-- Modal -->
 <div
   class="modal fade"
@@ -70,12 +66,11 @@ merged df
 grouped by df
 <small> {{ df|safe }} </small>
 <br />
-Chart
-<br />
 <img src="data:image/png;base64, {{chart|safe}}" id="img" />
 {% endif %}
+<br />
 <button
-  class="btn btn-primary not-visible"
+  class="btn btn-primary not-visible mt-2"
   id="report-btn"
   data-bs-toggle="modal"
   data-bs-target="#reportModal"
