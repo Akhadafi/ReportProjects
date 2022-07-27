@@ -1,14 +1,18 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+
 <!--  -->
-{% block title %}sale title{% endblock title %}
+{% block title %} sales list {% endblock title %}
+
 <!--  -->
-{% block content %} sale list
+{% block content %} sales list
+<br />
+
 <!--  -->
 {% for obj in object_list %}
 <div class="card mb-3">
-  <a href="{% url 'sales:detail' obj.pk %}" class="card-body">
-    {{ obj.transaction_id }}
-  </a>
+  <a href="{{obj.get_absolute_url}}" class="card-body"
+    >{{obj.transaction_id}}</a
+  >
 </div>
 {% endfor %}
 <!--  -->

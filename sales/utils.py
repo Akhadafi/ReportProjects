@@ -1,11 +1,9 @@
-import base64
-import uuid
-from io import BytesIO
-
-import matplotlib.pyplot as plt
-import seaborn as sns
+import uuid, base64
 from customers.models import Customer
 from profiles.models import Profile
+from io import BytesIO
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 
 def generate_code():
@@ -14,8 +12,8 @@ def generate_code():
 
 
 def get_salesman_from_id(val):
-    saleman = Profile.objects.get(id=val)
-    return saleman.user.username
+    salesman = Profile.objects.get(id=val)
+    return salesman.user.username
 
 
 def get_customer_from_id(val):
@@ -49,7 +47,6 @@ def get_chart(chart_type, data, results_by, **kwargs):
     d = data.groupby(key, as_index=False)["total_price"].agg("sum")
     if chart_type == "#1":
         print("bar chart")
-        # plt.bar(d[key], d["total_price"])
         sns.barplot(x=key, y="total_price", data=d)
     elif chart_type == "#2":
         print("pie chart")
@@ -60,7 +57,7 @@ def get_chart(chart_type, data, results_by, **kwargs):
             d[key], d["total_price"], color="green", marker="o", linestyle="dashed"
         )
     else:
-        print("ups... failed to indentyfy the chart type")
+        print("ups... failed to identify the chart type")
     plt.tight_layout()
     chart = get_graph()
     return chart
